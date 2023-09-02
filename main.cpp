@@ -12,6 +12,13 @@ void Jogo() {
     cout << "Jogo" << endl;
 }
 
+//TODO Dar include na biblioteca de palavras - João
+//TODO Arrumar o menu - Laus
+//TODO Dar a quantidade de palavras selecionadas - Laus
+//TODO Esconder as palavras - João
+//TODO Chances, acertos(nos lugares errados também), erros e tentativas anteriores - Laus e João
+//TODO Colocar cores - João
+
 int main() {
 
     cout << "--------------------------------------------------------------------------------------" << endl;

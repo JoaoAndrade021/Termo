@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/User/CLionProjects/termoDosGuri/cmake-build-debug",
-		"source" : "C:/Users/User/CLionProjects/termoDosGuri"
+		"build" : "C:/Users/User/CLionProjects/termoDosGuri/Termo/cmake-build-debug",
+		"source" : "C:/Users/User/CLionProjects/termoDosGuri/Termo"
 	},
 	"version" : 
 	{
