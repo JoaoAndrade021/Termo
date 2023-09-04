@@ -7,9 +7,11 @@
 using namespace std;
 
 void ComoJogar() {
+    cout << endl;
     cout << "Descubra a palavra certa em 7 tentativas! "
             "Depois de cada tentativa, as peças mostram o quão perto você está da solução." << endl;
     cout << "As palavras podem possuir letras repetidas." << endl;
+    cout << endl;
 }
 
 void Jogo(int pQtdPalavras) {
@@ -40,20 +42,20 @@ void Jogo(int pQtdPalavras) {
         cout << "\n" << endl;
         cout << "Tentativas restantes: " << xTentativas << endl;
         cout << "Digite uma palavra completa: ";
-        string tentativa;
-        cin >> tentativa;
+        string xTentativa;
+        cin >> xTentativa;
 
-        bool acertou = false;
+        bool xAcertou = false;
 
         for (int i = 0; i < pQtdPalavras; i++) {
-            if (tentativa == xPalavrasEscolhidas[i]) {
+            if (xTentativa == xPalavrasEscolhidas[i]) {
                 cout << "Parabéns, você acertou a palavra " << i + 1 << ": " << xPalavrasEscolhidas[i] << endl;
                 xPalavrasAsteriscos[i] = xPalavrasEscolhidas[i];
-                acertou = true;
+                xAcertou = true;
             }
         }
 
-        if (!acertou) {
+        if (!xAcertou) {
             cout << "Tentativa incorreta!" << endl;
             xTentativas--;
         }
@@ -74,6 +76,7 @@ void Jogo(int pQtdPalavras) {
     }
 
     if (xTentativas == 0) {
+        cout << "\n" << endl;
         cout << "Você perdeu! As palavras eram:" << endl;
         for (const string &palavra: xPalavrasEscolhidas) {
             cout << palavra << endl;
@@ -90,6 +93,7 @@ void Jogo(int pQtdPalavras) {
 
 int main() {
 
+    cout << "Trabalho feito por João Martini e Gabriel Laus" << endl;
     cout << "--------------------------------------------------------------------------------------" << endl;
     cout << "___________                               .___                                  .__  \n"
             "\\__    ___/__________  _____   ____     __| _/____  ______    ____  __ _________|__| \n"
@@ -108,58 +112,57 @@ int main() {
     cout << "2) Como jogar" << endl;
     cout << "3) Sair" << endl;
     cout << endl;
-    do {
-        cout << "Escolha: ";
-        cin >> xDecisao;
-        if (xDecisao != 1 && xDecisao != 2 && xDecisao != 3) {
-            cout << endl;
-            cout << "Opcao Invalida, escolha de novo." << endl;
-            cout << endl;
-        }
-    } while (xDecisao != 1 && xDecisao != 2 && xDecisao != 3);
 
-    if (xDecisao == 1) {
-        cout << "Com quantas palavras voce gostaria de jogar?" << endl;
-        cout << endl;
-        cout << "1) Uma palavras" << endl;
-        cout << "2) Duas palavras" << endl;
-        cout << "3) Tres palavras" << endl;
-        cout << "4) Quatro palavras" << endl;
-        cout << endl;
+    do {
         do {
             cout << "Escolha: ";
-            cin >> XEscolhaDePalavras;
-            if (XEscolhaDePalavras != 1 && XEscolhaDePalavras != 2 && XEscolhaDePalavras != 3 &&
-                XEscolhaDePalavras != 4) {
+            cin >> xDecisao;
+            if (xDecisao != 1 && xDecisao != 2 && xDecisao != 3) {
                 cout << endl;
                 cout << "Opcao Invalida, escolha de novo." << endl;
                 cout << endl;
             }
-        } while (XEscolhaDePalavras != 1 && XEscolhaDePalavras != 2 && XEscolhaDePalavras != 3 &&
-                 XEscolhaDePalavras != 4);
-        if (XEscolhaDePalavras == 1) {
-            Jogo(XEscolhaDePalavras);
+        } while (xDecisao != 1 && xDecisao != 2 && xDecisao != 3);
+
+        if (xDecisao == 1) {
+            cout << "Com quantas palavras você gostaria de jogar?" << endl;
+            cout << endl;
+            cout << "1) Uma palavras" << endl;
+            cout << "2) Duas palavras" << endl;
+            cout << "3) Tres palavras" << endl;
+            cout << "4) Quatro palavras" << endl;
+            cout << endl;
+            do {
+                cout << "Escolha: ";
+                cin >> XEscolhaDePalavras;
+                if (XEscolhaDePalavras != 1 && XEscolhaDePalavras != 2 && XEscolhaDePalavras != 3 &&
+                    XEscolhaDePalavras != 4) {
+                    cout << endl;
+                    cout << "Opcao Invalida, escolha de novo." << endl;
+                    cout << endl;
+                }
+            } while (XEscolhaDePalavras != 1 && XEscolhaDePalavras != 2 && XEscolhaDePalavras != 3 &&
+                     XEscolhaDePalavras != 4);
+            if (XEscolhaDePalavras == 1) {
+                Jogo(XEscolhaDePalavras);
+            }
+
+            if (XEscolhaDePalavras == 2) {
+                Jogo(XEscolhaDePalavras);
+            }
+
+            if (XEscolhaDePalavras == 3) {
+                Jogo(XEscolhaDePalavras);
+            }
+
+            if (XEscolhaDePalavras == 4) {
+                Jogo(XEscolhaDePalavras);
+            }
+
+        } else if (xDecisao == 2) {
+            ComoJogar();
         }
-
-        if (XEscolhaDePalavras == 2) {
-            Jogo(XEscolhaDePalavras);
-        }
-
-        if (XEscolhaDePalavras == 3) {
-            Jogo(XEscolhaDePalavras);
-        }
-
-        if (XEscolhaDePalavras == 4) {
-            Jogo(XEscolhaDePalavras);
-        }
-
-    } else if (xDecisao == 2) {
-        ComoJogar();
-
-    } else if (xDecisao == 3) {
-        cout << "Saindo do Jogo..." << endl;
-        cin.get();
-    }
+    } while (xDecisao == 2);
 
     return 0;
 }
