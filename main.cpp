@@ -8,26 +8,28 @@
 using namespace std;
 
 void ComoJogar() {
+    //Explicando como o jogo funciona.
     cout << endl;
     cout << "Descubra a palavra certa em 7 tentativas! "
             "Depois de cada tentativa, as peças mostram o quão perto você está da solução." << endl;
-    cout << "As palavras podem possuir letras repetidas." << endl;
+    cout << "As palavras podem possuir letras repetidas. Voce pode jogar com 1, 2, 3 ou 4 palavras." << endl;
     cout << endl;
 }
 
-void ImprimirLetraComCor(char letra, int cor) {
-    switch (cor) {
+void ImprimirLetraComCor(char xLetra, int xCor) {
+    //Função para imprimir as letras com cores diferentes.
+    switch (xCor) {
         case 1: // Verde
-            cout << "\033[32m" << letra << "\033[0m";
+            cout << "\033[32m" << xLetra << "\033[0m";
             break;
         case 2: // Amarelo
-            cout << "\033[33m" << letra << "\033[0m";
+            cout << "\033[33m" << xLetra << "\033[0m";
             break;
         case 3: // Preto
-            cout << "\033[31m" << letra << "\033[0m";
+            cout << "\033[31m" << xLetra << "\033[0m";
             break;
         default:
-            cout << letra;
+            cout << xLetra;
             break;
     }
 }
@@ -35,9 +37,10 @@ void ImprimirLetraComCor(char letra, int cor) {
 void Jogo(int pQtdPalavras) {
     srand(time(NULL));
 
+    //Guarda as palavras em um vetor.
     vector<string> xPalavrasEscolhidas;
 
-    for (int i = 0; i < pQtdPalavras; i++) {
+    for (int i = 0; i < pQtdPalavras; i++) {  //Sorteio de Palavras.
         string xPalavraEscolhida = lista[rand() % TAM_LISTA];
         xPalavrasEscolhidas.push_back(xPalavraEscolhida);
     }
@@ -46,12 +49,14 @@ void Jogo(int pQtdPalavras) {
 
     vector<string> xPalavrasAsteriscos;
 
-    for (const string &palavra: xPalavrasEscolhidas) {
-        string palavraAsteriscos(palavra.length(), '*');
-        xPalavrasAsteriscos.push_back(palavraAsteriscos);
+    for (const string &xPalavra: xPalavrasEscolhidas) {  //Esconder as palavras com asteriscos.
+        string xPalavraAsteriscos(xPalavra.length(), '*');
+        xPalavrasAsteriscos.push_back(xPalavraAsteriscos);
     }
 
+    //Jogo em si.
     while (xTentativas > 0) {
+        //Imprimir as palavras
         for (int i = 0; i < pQtdPalavras; i++) {
             cout << "\n" << endl;
             cout << "Palavra " << i + 1 << " " << xPalavrasAsteriscos[i] << " (" << xPalavrasEscolhidas[i].size()
@@ -65,6 +70,7 @@ void Jogo(int pQtdPalavras) {
 
         bool xAcertou = false;
 
+        // Verifica se a tentativa é igual a alguma das palavras
         for (int i = 0; i < pQtdPalavras; i++) {
             if (xTentativa == xPalavrasEscolhidas[i]) {
                 cout << "Parabéns, você acertou a palavra " << i + 1 << ": " << xPalavrasEscolhidas[i] << endl;
@@ -72,25 +78,28 @@ void Jogo(int pQtdPalavras) {
                 xAcertou = true;
                 xTentativas--;
             } else {
+                // Imprime a tentativa com cores diferentes para cada letra, conforme a palavra soletrada
                 for (int j = 0; j < xPalavrasEscolhidas[i].size(); j++) {
-                    char letraPalavra = xPalavrasEscolhidas[i][j];
-                    char letraTentativa = xTentativa[j];
+                    char xLetraPalavra = xPalavrasEscolhidas[i][j];
+                    char xLetraTentativa = xTentativa[j];
 
                     // Verifique se a letra da tentativa é igual à letra da palavra
-                    if (letraTentativa == letraPalavra) {
-                        ImprimirLetraComCor(letraTentativa, 1); // Verde para letras corretas
+                    if (xLetraTentativa == xLetraPalavra) {
+                        ImprimirLetraComCor(xLetraTentativa, 1); // Verde para letras corretas
                         xPalavrasAsteriscos[i][j] = xPalavrasEscolhidas[i][j];
-                    } else if (xPalavrasEscolhidas[i].find(letraTentativa) != string::npos) {
-                        ImprimirLetraComCor(letraTentativa, 2); // Amarelo para letras na palavra em outra posição
+                    } else if (xPalavrasEscolhidas[i].find(xLetraTentativa) != string::npos) {
+                        ImprimirLetraComCor(xLetraTentativa, 2); // Amarelo para letras na palavra em outra posição
                     } else {
-                        ImprimirLetraComCor(letraTentativa, 3); // Cinza para letras que não estão na palavra
+                        ImprimirLetraComCor(xLetraTentativa, 3); // Vermelho para letras que não estão na palavra
                     }
                 }
 
+                // Imprime o restante da palavra com asteriscos
                 cout << " (" << xPalavrasEscolhidas[i].size() << ")" << endl;
             }
         }
 
+        // Se não acertou nenhuma palavra, diminui uma tentativa
         if (!xAcertou) {
             cout << "Tentativa incorreta!" << endl;
             xTentativas--;
@@ -98,6 +107,7 @@ void Jogo(int pQtdPalavras) {
 
         bool xTodasPalavrasDescobertas = true;
 
+        // Verifica se todas as palavras foram descobertas
         for (int i = 0; i < pQtdPalavras; i++) {
             if (xPalavrasAsteriscos[i] != xPalavrasEscolhidas[i]) {
                 xTodasPalavrasDescobertas = false;
@@ -105,6 +115,7 @@ void Jogo(int pQtdPalavras) {
             }
         }
 
+        // Se todas as palavras foram descobertas, o jogo acaba
         if (xTodasPalavrasDescobertas) {
             cout << "\n" << endl;
             cout << "Parabéns, você acertou todas as palavras!" << endl;
@@ -112,6 +123,7 @@ void Jogo(int pQtdPalavras) {
         }
     }
 
+    // Se acabaram as tentativas, o jogo acaba
     if (xTentativas == 0) {
         cout << "\n" << endl;
         cout << "Você perdeu! As palavras eram:" << endl;
@@ -122,31 +134,34 @@ void Jogo(int pQtdPalavras) {
 }
 
 void Menu(){
-    cout << "Trabalho feito por João Martini e Gabriel Laus" << endl;
+
+    //Menu Principal do Jogo.
+
+    cout << "Trabalho feito por João Vitor Martini e Gabriel Beltrão Laus" << endl;
     cout << "--------------------------------------------------------------------------------------" << endl;
-    cout << "___________                               .___                                  .__  \n"
-            "\\__    __/_________  _____   ____     _| _/___  ______    ____  __ _________|__| \n"
-            "  |    |/ __ \\  __ \\/     \\ /  _ \\   / __ |/  _ \\/  __/   / ___\\|  |  \\  __ \\  | \n"
-            "  |    |\\  __/|  | \\/  Y Y  (  <_> ) / /_/ (  <_> )__ \\   / /_/  >  |  /|  | \\/  | \n"
-            "  |___| \\__  >_|  |__|_|  /\\____/  \\___ |\\___/___  >  \\___  /|____/ |__|  |__| \n"
-            "             \\/            \\/              \\/          \\/  /_____/                   " << endl;
+    cout << "___________                               .___                                  .__ \n"
+            "\\__    ___/__________  _____   ____     __| _/____  ______    ____  __ _________|__|\n"
+            "  |    |_/ __ \\_  __ \\/     \\ /  _ \\   / __ |/  _ \\/  ___/   / ___\\|  |  \\_  __ \\  |\n"
+            "  |    |\\  ___/|  | \\/  Y Y  (  <_> ) / /_/ (  <_> )___ \\   / /_/  >  |  /|  | \\/  |\n"
+            "  |____| \\___  >__|  |__|_|  /\\____/  \\____ |\\____/____  >  \\___  /|____/ |__|  |__|\n"
+            "             \\/            \\/              \\/          \\/  /_____/                  " << endl;
     cout << "Pressione enter para iniciar o jogo!" << endl;
 
     cin.get();
 
     int xDecisao = 0;
-    int XEscolhaDePalavras = 0;
+    int xEscolhaDePalavras = 0;
 
     cout << "1) Jogar" << endl;
     cout << "2) Como jogar" << endl;
     cout << "3) Sair" << endl;
     cout << endl;
 
-    do {
-        do {
+    do {  //Caso seja a opção 2.
+        do { //Caso seja a opção 1.
             cout << "Escolha: ";
             cin >> xDecisao;
-            if (cin.fail()){
+            if (cin.fail()){ //Caso escreva um palavra ou letra nas escolhas do código.
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(),'\n');
             }
@@ -167,29 +182,35 @@ void Menu(){
             cout << endl;
             do {
                 cout << "Escolha: ";
-                cin >> XEscolhaDePalavras;
-                if (XEscolhaDePalavras != 1 && XEscolhaDePalavras != 2 && XEscolhaDePalavras != 3 &&
-                    XEscolhaDePalavras != 4) {
+                cin >> xEscolhaDePalavras;
+
+                if (cin.fail()){ //Caso escreva um palavra ou letra nas escolhas do código.
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                }
+
+                if (xEscolhaDePalavras != 1 && xEscolhaDePalavras != 2 && xEscolhaDePalavras != 3 &&
+                    xEscolhaDePalavras != 4) {
                     cout << endl;
                     cout << "Opção Invalida, escolha de novo." << endl;
                     cout << endl;
                 }
-            } while (XEscolhaDePalavras != 1 && XEscolhaDePalavras != 2 && XEscolhaDePalavras != 3 &&
-                     XEscolhaDePalavras != 4);
-            if (XEscolhaDePalavras == 1) {
-                Jogo(XEscolhaDePalavras);
+            } while (xEscolhaDePalavras != 1 && xEscolhaDePalavras != 2 && xEscolhaDePalavras != 3 &&
+                     xEscolhaDePalavras != 4);
+            if (xEscolhaDePalavras == 1) {
+                Jogo(xEscolhaDePalavras);
             }
 
-            if (XEscolhaDePalavras == 2) {
-                Jogo(XEscolhaDePalavras);
+            if (xEscolhaDePalavras == 2) {
+                Jogo(xEscolhaDePalavras);
             }
 
-            if (XEscolhaDePalavras == 3) {
-                Jogo(XEscolhaDePalavras);
+            if (xEscolhaDePalavras == 3) {
+                Jogo(xEscolhaDePalavras);
             }
 
-            if (XEscolhaDePalavras == 4) {
-                Jogo(XEscolhaDePalavras);
+            if (xEscolhaDePalavras == 4) {
+                Jogo(xEscolhaDePalavras);
             }
 
         } else if (xDecisao == 2) {
@@ -200,13 +221,6 @@ void Menu(){
         }
     } while (xDecisao == 2);
 }
-
-//TODO Dar include na biblioteca de palavras - João (Feito)
-//TODO Arrumar o menu - Laus (Quase resolvido, vamos resolver juntos)
-//TODO Dar a quantidade de palavras selecionadas - Laus (Feito)
-//TODO Esconder as palavras - João (Feito)
-//TODO Chances, acertos(nos lugares errados também), erros e tentativas anteriores - Laus e João (Feito)
-//TODO Colocar cores - João (Feito)
 
 int main() {
     Menu();
